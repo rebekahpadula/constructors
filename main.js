@@ -3,8 +3,10 @@
  * from it called `foo`.
  */
 
-// YOUR CODE HERE
+function Foo () {
 
+}
+var foo = new Foo();
 
 console.assert(foo instanceof Foo);
 
@@ -16,9 +18,18 @@ console.assert(foo instanceof Foo);
  * should be `"woof"`. `Dog` should inherit from an instance of `Animal`.
  */
 
-// YOUR CODE HERE
+function Animal () {
 
+}
+function Dog () {
+    this.says = 'woof';
+};
 
+Dog.prototype = new Animal();
+
+var dog = new Dog();
+
+console.assert(new Dog().says === "woof");
 console.assert(new Dog().says === "woof");
 
 /**
@@ -27,8 +38,13 @@ console.assert(new Dog().says === "woof");
  * should be `"meow"`. Cat should also inherit from an instance of `Animal`.
  */
 
-// YOUR CODE HERE
+function Cat () {
+    this.says = 'meow';
+};
 
+Cat.prototype = new Animal();
+
+var cat = new Cat();
 
 console.assert(cat instanceof Cat);
 console.assert(cat.says === "meow");
@@ -38,9 +54,9 @@ console.assert(cat.says === "meow");
  * value of an instance's `.says` property with an exclamation mark appended.
  */
 
-// YOUR CODE HERE
-
-
+Animal.prototype.speak = function (speak) {
+       return this.says + '!';
+};
 console.assert(cat.speak() === "meow!");
 console.assert(dog.speak() === "woof!");
 
@@ -51,8 +67,15 @@ console.assert(dog.speak() === "woof!");
  * `squeal` that returns the secret string.
  */
 
-// YOUR CODE HERE
+function KeepSecret (secret) {
+    this.getSecret = function () {
+        return secret;
+    };
+};
 
+KeepSecret.prototype.squeal = function () {
+    return this.getSecret();
+};
 
 var mySecret = "My class rocks!";
 var dontTellNobody = new KeepSecret(mySecret);
@@ -68,8 +91,18 @@ console.assert(dontTellNobody.squeal() === mySecret);
  * the key that was used to create the Safe; then return the secret data.
  */
 
-// YOUR CODE HERE
+function Key () {
 
+};
+
+function Safe (a, b) {
+
+    Safe.prototype.unlock = function (key) {
+        if (key === b) {
+            return a;
+        };  
+    };
+}
 
 var sensitive = "shhhhh!";
 var rightKey = new Key();
@@ -86,8 +119,12 @@ console.assert(safe.unlock(rightKey) === sensitive);
  * look up how to do it online.
  */
 
-// YOUR CODE HERE
-
+function Validator () {
+    Validator.prototype.email = function (str) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(str);
+    };
+}
 
 if (typeof Validator === "function") {
   var valid = new Validator();
